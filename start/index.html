@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Transition Animation States Tutorial</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/design.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap" rel="stylesheet">
+    
+
+</head>
+
+<body>
+    <div class="fixedTop madimi-one-regular">
+        <div class="logo">Transition</div>
+        <div class="nav">
+            <ul>
+                <li><a href="#cont">Service</a></li>
+                <li><a href="#cont">About</a></li>
+                <li><a href="#cont" id="focus">Hire us</a></li>
+            </ul>
+        </div> 
+    </div>
+    <header>
+        <div class="absolute">
+            <div class="bg rellax"data-rellax-speed="-16"></div>
+        </div>
+    <div class="absolute">
+        <img class="rellax"data-rellax-speed="-13" src="img/backmnt.png" alt="back mountain">
+    </div>
+    <div class="absolute">
+        <img class="rellax"data-rellax-speed="-8" src src="img/midmnt.png" alt="middle mountain">
+    </div>
+    <div class="absolute">
+        <img class="rellax"data-rellax-speed="-4" src="img/frntmnt.png" alt="fornt mountain"> 
+    </div>
+    <div class="coverText">
+        <h2 class="rellax"data-rellax-speed="-6">Transition <br />Studio</h2>
+        <p class="rellax"data-rellax-speed="-4">Taking you on a journey of discovery. Creating your digital experience.</p>
+    </div>
+    <div class="absolute">
+        <img src="img/frnt.png" alt="mountain climber">
+    </div>
+    </header>
+
+        <div id="cont" class="content">
+            <div class="grid">
+                <img src="img/cave.svg" alt="man in cave">
+                <div>
+                    <h2 class="rellax"data-rellax-speed="-2">
+                        The Journey Begins Now
+                    </h2>
+                    <p class="rellax"data-rellax-speed="-3">
+                        Lorem Ipsum: usage. Lorem ipsum is a pseudo-Latin text used in web design, typography, layout, and printing in place of English to emphasise design elements over content. It's also called placeholder (or filler) text. It's a convenient tool for mock-ups. Lorem Ipsum: usage. Lorem ipsum is a pseudo-Latin text used in web design, typography, layout, and printing in place of English to emphasise design elements over content. It's also called placeholder (or filler) text. It's a convenient tool for mock-ups.
+                    </p>
+                </div>
+            </div>
+        </div>
+    
+
+    <!-- javascript -->
+    <script type="text/javascript" src="rellax.min.js"></script>
+    <script>
+           
+           var rellax = new Rellax('.rellax', {
+            //center: true,
+            callback: function(position) {
+                // callback every position change
+                console.log(position);
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (e.target.tagName !== 'A') return;
+            if ((e.target.href && e.target.href.indexOf('#') != -1) && ((e.target.pathname == location.pathname) || ('/' + e.target.pathname == location.pathname)) && (e.target.search == location.search)) {
+                scrollAnchors(e, e.target);
+            }
+        });
+
+        function scrollAnchors(e, respond = null) {
+
+            function distanceToTop(el) {
+                return Math.floor(el.getBoundingClientRect().top);
+            }
+
+            e.preventDefault();
+            var targetID = (respond) ? respond.getAttribute('href') : this.getAttribute('href');
+            var targetAnchor = document.querySelector(targetID);
+            if (!targetAnchor) return;
+            var originalTop = distanceToTop(targetAnchor);
+            window.scrollBy({
+                top: originalTop,
+                left: 0,
+                behavior: 'smooth'
+            });
+            var checkIfDone = setInterval(function() {
+                var atBottom = window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 2;
+                if (distanceToTop(targetAnchor) === 0 || atBottom) {
+                    targetAnchor.tabIndex = '-1';
+                    targetAnchor.focus();
+
+                    if ('history' in window) {
+                        window.history.pushState('', '', targetID);
+                    } else {
+                        window.location = targetID;
+                    }
+
+                    clearInterval(checkIfDone);
+                }
+            }, 100);
+        }
+
+    </script>
+</body>
